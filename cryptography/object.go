@@ -19,34 +19,35 @@ type EncryptReq struct {
 	Plaintext    []PlaintextEncrypt `json:"plaintext"`
 }
 
-type CiphertextEncrypt struct {
+type Ciphertext struct {
 	Text string `json:"text"`
+	AAD  string `json:"aad,omitempty"`
 	MAC  string `json:"mac,omitempty"`
 	IV   string `json:"iv,omitempty"`
 }
 
 type EncryptResult struct {
 	KeyVersion int              `json:"keyVersion"`
-	Ciphertext []CiphertextEncrypt `json:"ciphertext"`
+	Ciphertext []Ciphertext `json:"ciphertext"`
 }
 
 type EncryptRes struct {
 	Result EncryptResult `json:"result"`
 }
 
-type CipherBlock struct {
-	Text string `json:"text"`
-	AAD  string `json:"aad"`
-	MAC  string `json:"mac"`
-	IV   string `json:"iv"`
-}
+// type CipherBlock struct {
+// 	Text string `json:"text"`
+// 	AAD  string `json:"aad"`
+// 	MAC  string `json:"mac"`
+// 	IV   string `json:"iv"`
+// }
 
 type DecryptReq struct {
 	SessionToken string        `json:"sessionToken"`
 	SlotID       int           `json:"slotId"`
 	KeyID        string        `json:"keyId"`
 	KeyVersion   *int           `json:"keyVersion,omitempty"`
-	Ciphertext   []CipherBlock `json:"ciphertext"`
+	Ciphertext   []Ciphertext `json:"ciphertext"`
 }
 
 type DecryptRes struct {

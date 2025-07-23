@@ -22,7 +22,7 @@ type SGKMS struct {
 
 func New(certPath, keyPath, password, baseURL string, slotID int, insecure bool) (*SGKMS, error) {
 	// Catat waktu mulai
-	startTime := time.Now()
+	// startTime := time.Now()
 
 	client, _ := common.InitTLSClient(certPath, keyPath, insecure)
 
@@ -47,8 +47,8 @@ func New(certPath, keyPath, password, baseURL string, slotID int, insecure bool)
 	}
 
 	// // Catat waktu selesai
-	elapsedTime := time.Since(startTime)
-	fmt.Printf("Waktu Login: %v detik\n", elapsedTime.Seconds())
+	// elapsedTime := time.Since(startTime)
+	// fmt.Printf("Waktu Login: %v detik\n", elapsedTime.Seconds())
 	return s, nil
 }
 
@@ -106,8 +106,6 @@ func (s *SGKMS) RandomNumber(length int) (*authentication.RandomResult, error) {
 }
 
 func (s *SGKMS) Encrypt(keyId string, plaintext []cryptography.PlaintextEncrypt) (*cryptography.EncryptRes, error) {
-	// Catat waktu mulai
-	startTime := time.Now()
 
 	if err := s.ensureSession(); err != nil {
 		return nil, err
@@ -118,14 +116,10 @@ func (s *SGKMS) Encrypt(keyId string, plaintext []cryptography.PlaintextEncrypt)
 		return nil, err
 	}
 
-	// Catat waktu selesai
-	elapsedTime := time.Since(startTime)
-	fmt.Printf("Waktu Encrypt: %v detik\n", elapsedTime.Seconds())
-
 	return res, nil
 }
 
-func (s *SGKMS) Decrypt(keyId string, keyVersion *int, Ciphertext []cryptography.CipherBlock) (*cryptography.DecryptRes, error) {
+func (s *SGKMS) Decrypt(keyId string, keyVersion *int, Ciphertext []cryptography.Ciphertext) (*cryptography.DecryptRes, error) {
 	// Catat waktu mulai
 	startTime := time.Now()
 
