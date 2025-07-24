@@ -63,7 +63,7 @@ func main() {
 		log.Fatalf("Error creating SGKMS object: %v", err)
 	}
 
-     //Encrypt Asimetric Algorithm RSA
+     //Asymmetric Encryption Algorithm RSA
     plaintextRsa := []cryptography.PlaintextEncrypt{
 		{
 			Text: "Budi Setiawan",
@@ -77,7 +77,7 @@ func main() {
 	}
 	fmt.Printf("Encrypt RSA: %+v\n", encryptRsa)
 
-    //Decrypt Asimmetric Algorithm RSA
+    //Asymmetric Decryption Algorithm RSA
 	decryptRsa, err := user.Decrypt(keyRsa, nil, encryptRsa.Result.Ciphertext)
 	if err != nil {
 		log.Fatalf("Error creating SGKMS object: %v", err)
@@ -91,3 +91,7 @@ func main() {
 A detailed explanation of how to use SGKMS Go SDK is provided in the list below,
 
 * [Encrypt & Decrypt](docs/Encrypt.md)
+* [Seal & Unseal](docs/Seal.md)
+* [Encrypt File](docs/EncryptFile.md)
+
+

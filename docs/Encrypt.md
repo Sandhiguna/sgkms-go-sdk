@@ -32,7 +32,7 @@ The encryption response varies depending on the algorithm used.
 |  **RSA** |**available**| **not available**| **not available** | **not available** |
 
 
-### Example
+### Example Encrypt
 
 ```go
 package main
@@ -61,7 +61,7 @@ func main() {
 		log.Fatalf("Error creating SGKMS object: %v", err)
 	}
 
-    // Algorithm AES
+	//Symmetric Encryption Algorithm AES
     plaintextAes := []cryptography.PlaintextEncrypt{
 		{
 			Text: "Budi Setiawan",
@@ -77,7 +77,7 @@ func main() {
 	}
 	fmt.Printf("Encrypt AES: %+v\n", encryptAES)
 
-    // Algorithm RSA
+    //Asimmetric Encrypt Algorithm RSA
     plaintextRsa := []cryptography.PlaintextEncrypt{
 		{
 			Text: "Budi Setiawan",
@@ -120,13 +120,13 @@ The parameter type used for decryption
 ### Respons Ciphertext - Decrypt
 
 
-|Algorithm | Plaintext |
+|Algorithm | Ciphertext |
 |-------------|-------------|
 |  **AES** |[]string| 
 |  **RSA** |[]stirng| 
 
 
-### Example
+### Example Decrypt
 
 ```go
 package main
@@ -155,7 +155,36 @@ func main() {
 		log.Fatalf("Error creating SGKMS object: %v", err)
 	}
 
-	//Encrypt Asimmetric Algorithm RSA
+    //Symmetric Encryption Algorithm AES
+    plaintextAes := []cryptography.PlaintextEncrypt{
+		{
+			Text: "Budi Setiawan",
+			AAD:  "nama", //optional
+		}, {
+			Text: "JL Kaliurang km 10",
+			AAD:  "alamat", //optional
+		},
+	}
+	encrypt, err := user.Encrypt(keyAes, plaintextAes)
+	if err != nil {
+		log.Fatalf("Error creating SGKMS object: %v", err)
+	}
+	fmt.Printf("Encrypt AES: %+v\n", encrypt)
+
+	ciphertextAes := encrypt.Result.Ciphertext
+	for i := range ciphertextAes {
+		if i < len(plaintextAes) {
+			ciphertextAes[i].AAD = plaintextAes[i].AAD
+		}
+	}
+	decrypt, err := user.Decrypt(keyAes, &encrypt.Result.KeyVersion, ciphertextAes)
+	if err != nil {
+		log.Fatalf("Error creating SGKMS object: %v", err)
+	}
+	fmt.Printf("Decrypt AES: %+v\n", decrypt)
+
+
+	//Asimmetric Encrypt Algorithm RSA
     plaintextRsa := []cryptography.PlaintextEncrypt{
 		{
 			Text: "Budi Setiawan",
@@ -174,36 +203,5 @@ func main() {
 		log.Fatalf("Error creating SGKMS object: %v", err)
 	}
 	fmt.Printf("Decrypt RSA: %+v\n", decryptRsa)
-
-
-    //Encrypt Asimmetric Algorithm RSA
-    plaintextAes := []cryptography.PlaintextEncrypt{
-		{
-			Text: "Budi Setiawan",
-			AAD:  "nama", //optional
-		}, {
-			Text: "JL Kaliurang km 10",
-			AAD:  "alamat", //optional
-		},
-	}
-	encrypt, err := user.Encrypt(keyAes, plaintextAes)
-	if err != nil {
-		log.Fatalf("Error creating SGKMS object: %v", err)
-	}
-	fmt.Printf("Encrypt AES: %+v\n", encrypt)
-
-
-	// Decryption Symmetric Algorithm RSA
-	ciphertextAes := encrypt.Result.Ciphertext
-	for i := range ciphertextAes {
-		if i < len(plaintextAes) {
-			ciphertextAes[i].AAD = plaintextAes[i].AAD
-		}
-	}
-	decrypt, err := user.Decrypt(keyAes, &encrypt.Result.KeyVersion, ciphertextAes)
-	if err != nil {
-		log.Fatalf("Error creating SGKMS object: %v", err)
-	}
-	fmt.Printf("Decrypt AES: %+v\n", decrypt)
 }
 ```
