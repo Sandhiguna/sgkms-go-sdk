@@ -46,11 +46,17 @@ import (
 	"log"
 	"os"
 	"strconv"
+    "github.com/joho/godotenv"
 	"github.com/Sandhiguna/sgkms-go-sdk"
 	"github.com/Sandhiguna/sgkms-go-sdk/cryptography"
 )
 
 func main() {
+    // Load .env
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Gagal load .env:", err)
+	}
+
 	slotIDStr := os.Getenv("SGKMS_SLOT_ID")
 	slotID, _ := strconv.Atoi(slotIDStr)
 	password := os.Getenv("SGKMS_PASSWORD")
