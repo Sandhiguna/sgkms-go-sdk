@@ -29,11 +29,12 @@ import sgkms "github.com/Sandhiguna/sgkms-go-sdk"
 Setting environment sgkms-go-sdk:
 
 ```golang
-export SGKMS_SLOT_ID=      //slotId for login
-export SGKMS_PASSWORD=     //password for login
-export SGKMS_BASE_URL=     //host, example https://127.0.0.1:7008/v1.0
-export SGKMS_CERT_PATH=    //path certificate with format .pem
-export SGKMS_KEY_PATH=     //path certificate with format .key
+SGKMS_SLOT_ID=      //slotId for login
+SGKMS_PASSWORD=     //password for login
+SGKMS_BASE_URL=     //host, example https://127.0.0.1:7008/v1.0
+SGKMS_CERT_PATH=    //path certificate with format .pem
+SGKMS_KEY_PATH=     //path certificate with format .key
+KEY_RSA=            //keyId RSA from SGKMS
 ```
 
 ### Example
